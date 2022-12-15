@@ -1,19 +1,17 @@
 package playground
 
+import scala.annotation.tailrec
+
 object ScalaPlayground extends App {
 
-  def startsWith[A](l: List[A], prefix: List[A]): Boolean = (l, prefix) match {
-    case (_, Nil) => true
-    case (h :: t, h2 :: t2) if h == h2 => startsWith(t, t2)
-    case _ => false
+  def fib(n: Int): Int = {
+    @tailrec
+    def go(i: Int, prev: Int, curr: Int): Int = {
+      if (i <= 0) prev
+      else go(i - 1, curr, prev + curr)
+    }
+    go(n, 0,1)
   }
-
-  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = sup match {
-    case Nil => sub == Nil
-    case _ if startsWith(sup, sub) => true
-    case h :: t => hasSubsequence(t, sub)
-  }
-
-  println(s"hasSubsequence: ${hasSubsequence(List(1,3), List(2))}")
+  println(fib(4))
 
 }
